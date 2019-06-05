@@ -40,8 +40,8 @@ class Account:
 
     def changePassword(self, token, pwFrom, pwTo):
         token = self.jwt.verifyToken('PrivateKey.pem', token)
-        profile = self.database.selectOne('users', 'uuid', token['uuid'])
-        if (hashlib.blake2b((pwFrom+profile['salt']).encode()).hexdigest()) = profile['passhash']:
+        profile = self.database.selectOne('users', 'uuid', token[1]['uuid'])
+        if (hashlib.blake2b((pwFrom+profile['salt']).encode()).hexdigest()) == profile['passhash']:
             newSalt = ''.join(random.sample(ascii_letters+digits, 8))
             newPassword = hashlib.blake2b((pwTo+newSalt).encode()).hexdigest()
             self.database.updateOne('users', 'passhash', newPassword, 'uuid', profile['uuid'])

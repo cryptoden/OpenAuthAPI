@@ -22,6 +22,11 @@ def register_user(username, email, password, firstName, lastName, dob, country, 
 def login(username, password):
     return(acct.login(username, password))
 
+#Account Management Endpoints
+@hug.post('/changePassword')
+def changePassword(token, pwFrom, pwTo):
+    return(acct.changePassword(token,pwFrom,pwTo))
+
 #API Main Service Endpoints
 @hug.get('/testauth', requires=token_key_authentication)
 def basic_auth_api_call(user: hug.directives.user):
